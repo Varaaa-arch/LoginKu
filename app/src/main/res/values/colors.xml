@@ -9,6 +9,10 @@
     <color name="error_red_bg">#2D1B1B</color>
     <color name="error_red_text">#F87171</color>
     <color name="input_bg">#0F172A</color>
+    <color name="badge_bg">#1E293B</color>
+    <color name="progress_bg">#1E293B</color>
+    <color name="nav_bg">#0F172A</color>
+    <color name="glow_blue">#334D7CFF</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
