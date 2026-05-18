@@ -2,17 +2,13 @@ package com.example.loginku
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : AppCompatActivity() {
-
-    private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,34 +16,31 @@ class LoginActivity : AppCompatActivity() {
 
         val etUsername = findViewById<EditText>(R.id.etUsername)
         val etPassword = findViewById<EditText>(R.id.etPassword)
-        val ivShowPassword = findViewById<ImageView>(R.id.ivShowPassword)
-        val btnLogin = findViewById<FrameLayout>(R.id.btnLogin)
-        val layoutError = findViewById<LinearLayout>(R.id.layoutError)
+        val btnLogin = findViewById<Button>(R.id.btnLogin)
+        val tvError = findViewById<TextView>(R.id.tvError)
+        val tvLogoutMessage = findViewById<TextView>(R.id.tvLogoutMessage)
 
-        ivShowPassword.setOnClickListener {
-            isPasswordVisible = !isPasswordVisible
-            if (isPasswordVisible) {
-                etPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                ivShowPassword.alpha = 1.0f
-            } else {
-                etPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                ivShowPassword.alpha = 0.5f
-            }
-            etPassword.setSelection(etPassword.text.length)
+        // Cek apakah baru saja logout
+        val showLogoutMessage = intent.getBooleanExtra("show_logout_message", false)
+        if (showLogoutMessage) {
+            tvLogoutMessage.visibility = View.VISIBLE
         }
 
         btnLogin.setOnClickListener {
             val username = etUsername.text.toString()
             val password = etPassword.text.toString()
 
+            // Validasi sederhana
             if (username == "bizar" && password == "123456789") {
-                layoutError.visibility = View.GONE
+                tvError.visibility = View.GONE
+                tvLogoutMessage.visibility = View.GONE
+                
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             } else {
-                layoutError.visibility = View.VISIBLE
+                tvError.visibility = View.VISIBLE
+                tvLogoutMessage.visibility = View.GONE
             }
         }
     }
